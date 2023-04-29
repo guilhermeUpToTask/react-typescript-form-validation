@@ -1,0 +1,26 @@
+.Input{
+    font-size: 2rem;
+    border: 2px solid gray;
+}
+
+.Input:focus{
+    outline: none;
+    border-color:  black;
+}
+.InputValid{
+    border-color: green;
+}
+.InputInvalid{
+    border-color: red;
+}
+
+.Message{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.MessageInvalid{
+    color: red;
+}
+.MessageValid{
+    color:green;
+}
