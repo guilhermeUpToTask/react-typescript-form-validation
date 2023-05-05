@@ -1,12 +1,14 @@
 import React from "react";
 import classes from "./input.module.css";
+import {IInputRef } from "./";
+import {forwardRef, useImperativeHandle} from 'react';
 
 interface IDynamicInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     validation: (el :HTMLInputElement) => { isValid: boolean, message: string },
 }
 
 
-export default function (props: IDynamicInputProps) {
+const input =  function (props: IDynamicInputProps , ref: React.Ref<IInputRef>) {
     const { validation, ...restProps } = props;
 
     const [value, setValue] = React.useState("");
@@ -26,6 +28,12 @@ export default function (props: IDynamicInputProps) {
         setMessage(message);
     }
 
+    useImperativeHandle(ref, () => ({
+        validate: validate
+      }));
+
+
+
     function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>): void {
         setValue(e.target.value);
     }
@@ -43,3 +51,5 @@ export default function (props: IDynamicInputProps) {
 
     )
 }
+
+export default forwardRef(input);

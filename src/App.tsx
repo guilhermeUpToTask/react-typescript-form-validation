@@ -1,14 +1,8 @@
 import './App.css'
-import { useRef } from 'react';
 import DynamicInput from './Components/DynamicInput'
 import RadioInputWrapper from './Components/RadioInputWrapper';
+import Form from './Components/Form';
 function App() {
-  const childRef = useRef<any>(null);
-
-  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    childRef.current.validate();
-  }
 
 
 
@@ -28,13 +22,14 @@ function App() {
         <DynamicInput type='file' name='file' accept='image/*, text/*' required />
       </form>
 
-      <form onSubmit={(e) => onSubmitHandler(e)}>
-        <RadioInputWrapper ref={childRef}>
+      <Form >
+        <DynamicInput name='name' placeholder='test' required/>
+        <DynamicInput name='name' placeholder='test' required/>
+        <RadioInputWrapper name='test'>
           <input type="radio" name="gender" value="male" /> Male
           <input type="radio" name="gender" value="female" />Female
         </RadioInputWrapper>
-        <button type='submit'>Submit</button>
-      </form>
+      </Form>
     </>
   )
 }

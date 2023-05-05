@@ -1,10 +1,12 @@
 import Input from "./input";
-import { IInputProps } from "./";
+import { IInputProps, IInputRef } from "./";
+import {forwardRef} from 'react';
 
 interface validationRule { isFailed: boolean, message: string }
-type validationRules = Array<(element: HTMLInputElement) => validationRule>;
+type validationRules = Array<(element: HTMLInputElement) => validationRule>
 
-export default function (props: IInputProps) {
+
+const validation =  function (props: IInputProps, ref: React.Ref<IInputRef>) {
     const { validationMessage, ...restProps } = props;
 
     function parsePropsToInt(props: string | number): number {
@@ -79,8 +81,10 @@ export default function (props: IInputProps) {
 
     return (
         <>
-            <Input validation={validation} {...restProps} />
+            <Input validation={validation} {...restProps} ref={ref} />
         </>
     )
 
 }
+
+export default forwardRef(validation);

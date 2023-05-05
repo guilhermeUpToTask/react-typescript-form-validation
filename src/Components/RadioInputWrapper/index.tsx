@@ -1,15 +1,17 @@
 import React, { ReactElement, forwardRef, useState, useImperativeHandle } from "react";
 
 type RadioGroupProps = {
-    children?: React.ReactNode;
-    customMessage?: string;
+    children?: React.ReactNode,
+    customMessage?: string,
+    name?: string,
 };
 type RadioGroupRef = {
     validate: () => void;
   };
 
+  
 
-export default forwardRef <RadioGroupRef, RadioGroupProps>( function (props, ref): ReactElement {
+const RadioGroup = (props: RadioGroupProps, ref: React.Ref<RadioGroupRef>) :  ReactElement=> {
     const newChilds: React.ReactNode[] = [];
     const [selectedValue, setSelectedValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -21,6 +23,7 @@ export default forwardRef <RadioGroupRef, RadioGroupProps>( function (props, ref
             setErrorMessage('');
         }
     }
+
     useImperativeHandle(ref, () => ({
         validate: validate
       }));
@@ -28,7 +31,6 @@ export default forwardRef <RadioGroupRef, RadioGroupProps>( function (props, ref
 
     if (props.children) {
         React.Children.map(props.children, (child) => {
-
                 if (React.isValidElement(child) && child.type === 'input' && child.props.type === 'radio') {
                     newChilds.push(
                         React.cloneElement<any>(child, {
@@ -43,11 +45,12 @@ export default forwardRef <RadioGroupRef, RadioGroupProps>( function (props, ref
                 }
         })
     };
-    console.log(newChilds);
     return (
         <>
             {newChilds}
             {errorMessage}
         </>
     )
-})
+}
+
+export default forwardRef(RadioGroup);
