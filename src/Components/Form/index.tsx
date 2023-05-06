@@ -1,38 +1,50 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import WrappingWithRef from '../../hoc/WrappingWithRef';
 import RadioInput from '../RadioInputWrapper';
 import DynamicInput from '../DynamicInput';
 
+interface DynamicFormProps {
+  children: React.ReactNode;
+}
 
-export default function MyForm(props: any) {
-  const InputsRefs = useRef<Array<any>>([]);
-
-  function registerInput(ref: any) {
-    console.log(ref,'new ref');
-    InputsRefs.current.push(ref);
-  }
+const DynamicForm: React.FC<DynamicFormProps> = ({ children, ...restProps }) => {
+  const inputsRefs = useRef<any[]>([]);
 
 
-  function onSubmitHandler( e: React.FormEvent<HTMLFormElement>) {
+
+  const mapChildren = useCallback(() => {
+    inputsRefs.current = [];
+    const updatedChilds = React.Children.map(children as React.ReactElement, (child: React.ReactElement) => {
+      if (child.type === DynamicInput || child.type === RadioInput) {
+        const ChildComponent = WrappingWithRef(child.type as React.ComponentType);
+        const ref = React.createRef<any>();// create a new ref for each DynamicInput
+        inputsRefs.current.push(ref); // store the new ref in the array
+        const newChild = <ChildComponent {...child.props} ref={ref} />;
+        return newChild;
+      }
+      return child;
+    });
+
+    return updatedChilds;
+  }, [children]);
+
+  const newChilds = mapChildren();
+
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(InputsRefs.current);
+    console.log(inputsRefs.current);
+    inputsRefs.current.forEach((inputRef) => {
+      if (inputRef.current)
+        inputRef.current.validate();
+    });
   }
-
-  const newChilds: React.ReactNode[] = (React.Children.map(props.children, (child: React.ReactElement) => {
-    if (child.type === DynamicInput) {
-      console.log(child.props);
-      const ChildComponent = WrappingWithRef(child.type as React.ComponentType);
-      return <ChildComponent {...child.props} ref={(ref:any) => registerInput(ref)} />;
-    }
-    return child;
-  }));
-
-  console.log(newChilds);
 
   return (
-    <form {...props} noValidate onSubmit={onSubmitHandler}>
+    <form {...restProps} noValidate onSubmit={onSubmitHandler}>
       {newChilds}
       <button type="submit">Submit</button>
     </form>
   );
-}
+};
+
+export default DynamicForm;

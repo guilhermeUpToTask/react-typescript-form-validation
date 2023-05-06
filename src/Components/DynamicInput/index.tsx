@@ -5,7 +5,7 @@ export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement>
     validationMessage?: string;
 }
 export interface IInputRef  {
-    validate: (element: HTMLInputElement) => void;
+    validate: () => boolean;
   };
 
 

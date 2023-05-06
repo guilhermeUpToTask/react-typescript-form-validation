@@ -24,7 +24,7 @@ function App() {
 
       <Form >
         <DynamicInput name='name' placeholder='test' required/>
-        <DynamicInput name='name' placeholder='test' required/>
+        <DynamicInput name='name2' placeholder='test' required/>
         <RadioInputWrapper name='test'>
           <input type="radio" name="gender" value="male" /> Male
           <input type="radio" name="gender" value="female" />Female

@@ -9,11 +9,13 @@ interface IDynamicInputProps extends React.InputHTMLAttributes<HTMLInputElement>
 
 
 const input =  function (props: IDynamicInputProps , ref: React.Ref<IInputRef>) {
-    const { validation, ...restProps } = props;
 
+    const { validation, ...restProps } = props;
     const [value, setValue] = React.useState("");
     const [isValid, setIsValid] = React.useState(true);
     const [message, setMessage] = React.useState("");
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
 
     const InputClasses = [classes.Input];
     const MessageClasses = [classes.Message];
@@ -22,10 +24,14 @@ const input =  function (props: IDynamicInputProps , ref: React.Ref<IInputRef>) 
         MessageClasses.push(isValid ? classes.MessageValid : classes.MessageInvalid);
     }
 
-    function validate(element : HTMLInputElement) : void {
-        const { isValid, message } = validation(element);
+    function validate() : boolean {
+        if(inputRef.current){
+        const { isValid, message } = validation(inputRef.current);
         setIsValid(isValid);
         setMessage(message);
+            return isValid;
+        }   
+        return true;
     }
 
     useImperativeHandle(ref, () => ({
@@ -38,12 +44,12 @@ const input =  function (props: IDynamicInputProps , ref: React.Ref<IInputRef>) 
         setValue(e.target.value);
     }
     function onBlurHandler(e: React.FocusEvent<HTMLInputElement>): void {
-        validate(e.target);
+        validate();
     }
 
     return (
         <>
-            <input className={InputClasses.join(" ")}  value={value}
+            <input className={InputClasses.join(" ")}  value={value} ref={inputRef}
                 onChange={(e) => onChangeHandler(e)} onBlur={(e) => onBlurHandler(e)} {...restProps} />
 
             <h1 className={MessageClasses.join(" ")}>{message}</h1>
