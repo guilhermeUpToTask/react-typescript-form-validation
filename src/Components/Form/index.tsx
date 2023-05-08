@@ -1,13 +1,14 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef } from 'react';
 import WrappingWithRef from '../../hoc/WrappingWithRef';
 import RadioInput from '../RadioInputWrapper';
 import DynamicInput from '../DynamicInput';
 
 interface DynamicFormProps {
   children: React.ReactNode;
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ children, ...restProps }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({ children, onSubmit, ...restProps }) => {
   const inputsRefs = useRef<any[]>([]);
 
 
@@ -30,17 +31,22 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ children, ...restProps }) => 
 
   const newChilds = mapChildren();
 
-  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>, onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void) {
     e.preventDefault();
     console.log(inputsRefs.current);
+
+    let result: boolean = true;
     inputsRefs.current.forEach((inputRef) => {
-      if (inputRef.current)
-        inputRef.current.validate();
+      if (inputRef.current && !inputRef.current.validate())
+        result = false;
     });
+    if (result && onSubmit) {
+      onSubmit(e);
+    }
   }
 
   return (
-    <form {...restProps} noValidate onSubmit={onSubmitHandler}>
+    <form {...restProps} noValidate onSubmit={(onSubmit) ? (e) => onSubmitHandler(e, onSubmit) : onSubmitHandler}>
       {newChilds}
       <button type="submit">Submit</button>
     </form>

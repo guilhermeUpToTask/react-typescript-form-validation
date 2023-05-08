@@ -2,6 +2,8 @@ import React from "react";
 import classes from "./input.module.css";
 import {IInputRef } from "./";
 import {forwardRef, useImperativeHandle} from 'react';
+import ValidMessage from "../UI/ValidMessage";
+import InvalidMesssage from "../UI/InvalidMesssage";
 
 interface IDynamicInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     validation: (el :HTMLInputElement) => { isValid: boolean, message: string },
@@ -18,10 +20,12 @@ const input =  function (props: IDynamicInputProps , ref: React.Ref<IInputRef>) 
 
 
     const InputClasses = [classes.Input];
-    const MessageClasses = [classes.Message];
+ //   const MessageClasses = [classes.Message];
+
+    let MessageComponent = null;
     if (message) {
         InputClasses.push(isValid ? classes.InputValid : classes.InputInvalid);
-        MessageClasses.push(isValid ? classes.MessageValid : classes.MessageInvalid);
+        MessageComponent = isValid ? <ValidMessage message={message} /> : <InvalidMesssage message={message} />;
     }
 
     function validate() : boolean {
@@ -51,8 +55,6 @@ const input =  function (props: IDynamicInputProps , ref: React.Ref<IInputRef>) 
         <>
             <input className={InputClasses.join(" ")}  value={value} ref={inputRef}
                 onChange={(e) => onChangeHandler(e)} onBlur={(e) => onBlurHandler(e)} {...restProps} />
-
-            <h1 className={MessageClasses.join(" ")}>{message}</h1>
         </>
 
     )

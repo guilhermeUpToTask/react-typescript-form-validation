@@ -1,54 +1,60 @@
 import React, { ReactElement, forwardRef, useState, useImperativeHandle } from "react";
+import InvalidMesssage from "../UI/InvalidMesssage";
 
 type RadioGroupProps = {
     children?: React.ReactNode,
     customMessage?: string,
     name?: string,
+    required?: boolean,
 };
 type RadioGroupRef = {
-    validate: () => void;
-  };
+    validate: () => boolean;
+};
 
-  
 
-const RadioGroup = (props: RadioGroupProps, ref: React.Ref<RadioGroupRef>) :  ReactElement=> {
+
+const RadioGroup = (props: RadioGroupProps, ref: React.Ref<RadioGroupRef>): ReactElement => {
     const newChilds: React.ReactNode[] = [];
     const [selectedValue, setSelectedValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     function validate() {
-        if (selectedValue === '') {
+        if (selectedValue === '' && props.required) {
             setErrorMessage(props.customMessage ? props.customMessage : ' Please select a value');
-        }else{
+            return false;
+        } else {
             setErrorMessage('');
+            return true;
         }
     }
 
     useImperativeHandle(ref, () => ({
         validate: validate
-      }));
+    }));
 
 
-    if (props.children) {
+    if (props.children && props.required) {
         React.Children.map(props.children, (child) => {
-                if (React.isValidElement(child) && child.type === 'input' && child.props.type === 'radio') {
-                    newChilds.push(
-                        React.cloneElement<any>(child, {
-                            onChange: () => setSelectedValue(child.props.value),
-                            checked: child.props.value === selectedValue,
-                            key: child.props.value
-                        })
-                    );
-                }
-                else {
-                    newChilds.push(child);
-                }
+            if (React.isValidElement(child) && child.type === 'input' && child.props.type === 'radio') {
+                newChilds.push(
+                    React.cloneElement<any>(child, {
+                        onChange: () => setSelectedValue(child.props.value),
+                        checked: child.props.value === selectedValue,
+                        key: child.props.value,
+                        name: props.name
+                    })
+                );
+            }
+            else {
+                newChilds.push(child);
+            }
         })
     };
+    console.log(newChilds);
     return (
         <>
-            {newChilds}
-            {errorMessage}
+            {(newChilds.length > 0) ? newChilds : props.children}
+            {errorMessage ? <InvalidMesssage message={errorMessage} /> : null}
         </>
     )
 }

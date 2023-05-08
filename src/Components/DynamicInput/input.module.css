@@ -1,6 +1,10 @@
 .Input{
     font-size: 2rem;
     border: 2px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .Input:focus{
