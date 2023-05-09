@@ -21,8 +21,12 @@ To use this project, you'll need to import the components you need from the Comp
 
     <Form onSubmit={onFormSubmit}>
       <Input name='name' id='name' label='Type Your Name' required minLength={4} maxLength={10} />
-        <Input type='email' name='email' validationMessage='Invalid Email Ex:name@email.com'
-          pattern="^[a-zA-Z0-9!#$%&amp;'*+\/=?^_`\{\|\}~.\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*$" autoComplete='email' required />
+        <Input type='email' 
+          name='email' 
+          validationMessage='Invalid Email Ex:name@email.com'
+          pattern="^[a-zA-Z0-9!#$%&amp;'*+\/=?^_`\{\|\}~.\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*$" 
+          autoComplete='email' 
+          required />
         <Input type='checkbox' value='check' required /> />
         <RadioGroup name='gender' id='gender' label='Choose your Gender'  required>
           <input type="radio" value="male" /> Male
