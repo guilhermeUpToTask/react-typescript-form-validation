@@ -4,12 +4,12 @@ import RadioInput from '../RadioGroup';
 import DynamicInput from '../Input';
 import classes from './index.module.css';
 
-interface DynamicFormProps {
+interface FormProps {
   children: React.ReactNode;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ children, onSubmit, ...restProps }) => {
+const DynamicForm: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) => {
   const inputsRefs = useRef<any[]>([]);
 
 
