@@ -3,7 +3,9 @@
     font-size: 1.5rem;
     font-weight: bold;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    place-items: center;
     margin: 0;
+}
+.Valid svg {
+    margin-right: .2rem;
 }

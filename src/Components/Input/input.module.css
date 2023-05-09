@@ -1,0 +1,19 @@
+.Input{
+    font-size: 2rem;
+    border: 2px solid gray;
+    margin: 1rem 0;
+}
+
+.Input:focus{
+    outline: none;
+    border-color:  black;
+}
+.InputValid{
+    border-color: green;
+}
+.InputInvalid{
+    border-color: red;
+}
+.Label{
+    font-size: 2rem;
+}

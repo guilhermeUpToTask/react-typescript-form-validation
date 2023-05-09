@@ -1,7 +1,8 @@
 import React, { useCallback, useRef } from 'react';
 import WrappingWithRef from '../../hoc/WrappingWithRef';
-import RadioInput from '../RadioInputWrapper';
-import DynamicInput from '../DynamicInput';
+import RadioInput from '../RadioGroup';
+import DynamicInput from '../Input';
+import classes from './index.module.css';
 
 interface DynamicFormProps {
   children: React.ReactNode;
@@ -46,7 +47,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ children, onSubmit, ...restPr
   }
 
   return (
-    <form {...restProps} noValidate onSubmit={(onSubmit) ? (e) => onSubmitHandler(e, onSubmit) : onSubmitHandler}>
+    <form {...restProps} noValidate className={classes.Form}
+    onSubmit={(onSubmit) ? (e) => onSubmitHandler(e, onSubmit) : onSubmitHandler}>
       {newChilds}
       <button type="submit">Submit</button>
     </form>

@@ -1,11 +1,14 @@
 import React, { ReactElement, forwardRef, useState, useImperativeHandle } from "react";
 import InvalidMesssage from "../UI/InvalidMesssage";
+import classes from './index.module.css';
 
 type RadioGroupProps = {
     children?: React.ReactNode,
     customMessage?: string,
     name?: string,
     required?: boolean,
+    label?: string,
+    id?: string
 };
 type RadioGroupRef = {
     validate: () => boolean;
@@ -41,7 +44,7 @@ const RadioGroup = (props: RadioGroupProps, ref: React.Ref<RadioGroupRef>): Reac
                         onChange: () => setSelectedValue(child.props.value),
                         checked: child.props.value === selectedValue,
                         key: child.props.value,
-                        name: props.name
+                        name: props.name,
                     })
                 );
             }
@@ -50,9 +53,11 @@ const RadioGroup = (props: RadioGroupProps, ref: React.Ref<RadioGroupRef>): Reac
             }
         })
     };
-    console.log(newChilds);
+    
+    const Label = (props.label) ? <label className={classes.Label} > {props.label}</label> : null; 
     return (
         <>
+            {Label}
             {(newChilds.length > 0) ? newChilds : props.children}
             {errorMessage ? <InvalidMesssage message={errorMessage} /> : null}
         </>

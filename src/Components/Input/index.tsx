@@ -3,6 +3,7 @@ import React, { forwardRef } from "react";
 
 export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement>{
     validationMessage?: string;
+    label?: string;
 }
 export interface IInputRef  {
     validate: () => boolean;

@@ -1,5 +1,5 @@
 import Input from "./input";
-import { IInputProps, IInputRef } from "./";
+import { IInputProps, IInputRef } from ".";
 import {forwardRef} from 'react';
 
 interface validationRule { isFailed: boolean, message: string }
