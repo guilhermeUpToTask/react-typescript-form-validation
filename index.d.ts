@@ -8,7 +8,7 @@ declare module 'up-to-task-validation-form' {
     export const Form: React.FC<FormProps>;
 
     export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-        validation: (el: HTMLInputElement) => { isValid: boolean, message: string },
+        validationMessage?: string;
         label?: string,
     }
     export interface IInputRef  {
