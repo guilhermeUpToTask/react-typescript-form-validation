@@ -2,7 +2,7 @@ import React, { ReactElement, forwardRef, useState, useImperativeHandle } from "
 import InvalidMesssage from "../UI/InvalidMesssage";
 import classes from './index.module.css';
 
-type RadioGroupProps = {
+interface RadioGroupProps {
     children?: React.ReactNode,
     customMessage?: string,
     name?: string,
@@ -10,7 +10,7 @@ type RadioGroupProps = {
     label?: string,
     id?: string
 };
-type RadioGroupRef = {
+interface RadioGroupRef {
     validate: () => boolean;
 };
 
