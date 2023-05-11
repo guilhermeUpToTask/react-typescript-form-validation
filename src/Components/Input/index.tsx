@@ -10,7 +10,7 @@ export interface IInputRef  {
   };
 
 
-const Input = function(props: IInputProps,  ref: React.Ref<IInputRef>) {
+const Input = function(props: IInputProps,  ref: React.Ref<IInputRef>) : React.ReactElement{
     return(
         <ValidateInput {...props} ref={ref}/>
     )

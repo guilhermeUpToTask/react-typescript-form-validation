@@ -9,7 +9,7 @@ interface FormProps {
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const Form: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) => {
+const Form: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) : React.ReactElement=> {
   const inputsRefs = useRef<any[]>([]);
 
 

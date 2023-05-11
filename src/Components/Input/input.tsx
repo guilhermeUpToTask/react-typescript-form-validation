@@ -1,7 +1,6 @@
-import React from "react";
 import classes from "./input.module.css";
 import {IInputRef } from ".";
-import {forwardRef, useImperativeHandle} from 'react';
+import React, {forwardRef, useImperativeHandle} from 'react';
 import ValidMessage from "../UI/ValidMessage";
 import InvalidMesssage from "../UI/InvalidMesssage";
 
@@ -10,7 +9,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string,
 }
 
-const input =  function (props: IInputProps , ref: React.Ref<IInputRef>) {
+const input =  function (props: IInputProps , ref: React.Ref<IInputRef>) : React.ReactElement{
     const { validation, ...restProps } = props;
     const [value, setValue] = React.useState("");
     const [isValid, setIsValid] = React.useState(true);
