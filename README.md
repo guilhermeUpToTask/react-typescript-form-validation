@@ -5,19 +5,16 @@ This project is a validation system for forms written in React TypeScript. It co
 To use this project, you'll need to have Node.js installed. Once you have Node.js installed, you can run the following command to install the project's dependencies:
 
 ```
- npm install
+ npm install up-to-task-validation-form
 ```
-
 
 ## Usage
 
-To use this project, you'll need to import the components you need from the Components folder. Here's an example of how to use the Form component with some Input components and a RadioGroup component:
+To use this project, you'll need to import the components. Here's an example of how to use the Form component with some Input components and a RadioGroup component:
 
 
 ```
-    import Input from './Components/Input';
-    import RadioGroup from './Components/RadioGroup';
-    import Form from './Components/Form';
+    import { Input, RadioGroup, Form} from 'up-to-task-validation-form';
 
     <Form onSubmit={onFormSubmit}>
       <Input name='name' id='name' label='Type Your Name' required minLength={4} maxLength={10} />
@@ -34,6 +31,7 @@ To use this project, you'll need to import the components you need from the Comp
         </RadioGroup>
     </Form>
 ```
+For proper functionality, please note that the Input and RadioGroup components should be wrapped inside the Form component.
 
 To handle form submissions, you can define a function that will be called when the form is submitted:
 ```
@@ -43,7 +41,7 @@ To handle form submissions, you can define a function that will be called when t
     }
 ```
 
-Note that This function will only be executed if all input validations have passed.
+Note that this function will only be called if all input validations have passed.
 
 ## Components
 This project includes the following components:

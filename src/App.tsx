@@ -1,19 +1,19 @@
-import './App.css'
-import Input from './Components/Input'
+import './App.css';
+import Input from './Components/Input';
 import RadioGroup from './Components/RadioGroup';
 import Form from './Components/Form';
 function App() {
 
+  //this function will only be called if all the inputs are valida
   function onFormSubmit (e:React.FormEvent<HTMLFormElement>) {
     const formData = new FormData(e.currentTarget);
     console.log(Object.fromEntries(formData));
-
   }
 
 
   return (
     <>
-      <h1>Dynamic Forms</h1>
+      <h1>Form Validation Exemples:</h1>
       <Form onSubmit={onFormSubmit}>
       <Input name='name' id='name' label='Type Your Name' required minLength={4} maxLength={10} />
         <Input type='email' name='email' validationMessage='Invalid Email Ex:name@email.com'

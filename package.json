@@ -1,6 +1,6 @@
 {
-  "name": "dynamic-form",
-  "private": true,
+  "name": "up-to-task-validation-form",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {

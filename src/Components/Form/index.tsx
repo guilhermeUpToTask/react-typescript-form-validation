@@ -9,7 +9,7 @@ interface FormProps {
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const DynamicForm: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) => {
+const Form: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) => {
   const inputsRefs = useRef<any[]>([]);
 
 
@@ -19,7 +19,7 @@ const DynamicForm: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) 
     const updatedChilds = React.Children.map(children as React.ReactElement, (child: React.ReactElement) => {
       if (child.type === DynamicInput || child.type === RadioInput) {
         const ChildComponent = WrappingWithRef(child.type as React.ComponentType);
-        const ref = React.createRef<any>();// create a new ref for each DynamicInput
+        const ref = React.createRef<any>();// create a new ref for each Input component
         inputsRefs.current.push(ref); // store the new ref in the array
         const newChild = <ChildComponent {...child.props} ref={ref} />;
         return newChild;
@@ -34,7 +34,6 @@ const DynamicForm: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) 
 
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>, onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void) {
     e.preventDefault();
-    console.log(inputsRefs.current);
 
     let result: boolean = true;
     inputsRefs.current.forEach((inputRef) => {
@@ -55,4 +54,4 @@ const DynamicForm: React.FC<FormProps> = ({ children, onSubmit, ...restProps }) 
   );
 };
 
-export default DynamicForm;
+export default Form;
